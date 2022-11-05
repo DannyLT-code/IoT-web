@@ -1,48 +1,24 @@
 //var, globales;
-// let, variables de scope {};
-// const, constantes.
-
+//let, variables de scope {};
+//const, constantes.
 const express = require('express');
-const mysql = require('mysql2');
+const medicion = require('./routes/medicion.js');
 
+//Default port = 80;
+//port for local testing = 3000;
+//tec.mx | pagina.com:8080.
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 //Conversor a json el contenido de una peticion
-app.use(express.json())
-
-app.get('/hola', (req, res) => {
-    res.send('Hola mundo 2!');
-})
-
-app.post('/luz', (req, res) => { 
-    //Recibe datos
-    //Procesa datos
-    //Devuelve respuesta
-    const body = req.body;
-    const pool = mysql.createPool({
-        host: 'endpoint',
-        user: 'admin',
-        password: '123',
-        database: 'dreamhome'
-    })
-
-    const conexion = pool.getConnection ((error, connection) => {
-        if(error)
-            throw error;
-        connection.release();
-    });
-
-    res.send(`Recibi el valor ${body.valor}`);
-})
+app.use(express.json());
+app.use('/', medicion);
 
 app.listen(port, () => {
     console.log(`Servicior iniciado en el puerto ${port}`);
 })
 
-//Default port = 80;
-//port for local testing = 3000;
-//tec.mx | pagina.com:8080.
+
 
 /* 
 En C:
