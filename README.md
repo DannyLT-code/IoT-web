@@ -1,2 +1,2 @@
 # IoT
- planTec
+First website build for school project
